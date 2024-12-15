@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>שלח טבלה באימייל</title>
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script>
+        (function() {
+            emailjs.init("11h9KmHLdq2QrApqd"); // כאן תכניס את ה-Public Key שלך מ-EmailJS
+        })();
+    </script>
+</head>
+<body>
+    <h2>שלח את הטבלה לאימייל שלך</h2>
+    <form id="emailForm">
+        <label for="user_email">כתובת אימייל:</label>
+        <!-- שים לב שה-ID פה הוא user_email -->
+        <input type="email" id="user_email" name="user_email" required>
+        <br><br>
+        <button type="submit">שלח</button>
+    </form>
+
+    <p id="statusMessage"></p>
+
+    <script>
+        document.getElementById("emailForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            // איסוף כתובת המייל מהטופס
+            const userEmail = document.getElementById("user_email").value;
+
+            // שליחת המייל דרך EmailJS
+            emailjs.send("service_6aene19", "template_f860kfn", {
+                user_email: userEmail, // שליחת כתובת האימייל מהטופס
+                message: "הנה הטבלה שביקשת." // הודעת המייל
+            }).then(function(response) {
+                document.getElementById("statusMessage").innerText = "הטבלה נשלחה בהצלחה!";
+                console.log("SUCCESS!", response.status, response.text);
+            }, function(error) {
+                document.getElementById("statusMessage").innerText = "שליחת הטבלה נכשלה. נסה שוב.";
+                console.error("FAILED...", error);
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
+<!-- Injection By NetFree -->
+<script src="https://netfree.link/injection-script/go-payment.js" type="text/javascript" async  ></script>
+<script src="https://netfree.link/injection-script/popup-card-init.js" type="text/javascript" async  ></script>
